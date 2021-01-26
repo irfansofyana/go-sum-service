@@ -17,13 +17,13 @@ func GetSum(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	if (err != nil) {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte(`{"message": "Server Error: Error when using sum function"}`))
+		message := "Internal server error"
+		m.GenerateJSONResponse(w, r, 500, message)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(fmt.Sprintf("{sum: %s}", result)))
+	message := fmt.Sprintf("{sum: %s}", result
+	m.GenerateJSONResponse(w, r, 200, message)
 }
 
 func main() {
