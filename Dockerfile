@@ -11,7 +11,8 @@ COPY . /src
 RUN go mod download
 
 # Build application
-RUN go build -o /app main.go
+USER root
+RUN CGO_ENABLED=0 go build -o /app main.go
 
 # Create deployment image from the built result
 FROM scratch
