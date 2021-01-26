@@ -18,12 +18,12 @@ func GetSum(w http.ResponseWriter, r *http.Request) {
 
 	if (err != nil) {
 		message := "Internal server error"
-		m.GenerateJSONResponse(w, r, 500, message)
+		m.GenerateJSONResponse(w, r, 500, message, "")
 		return
 	}
 
-	message := fmt.Sprintf("{sum: %s}", result
-	m.GenerateJSONResponse(w, r, 200, message)
+	message := "Sum function is success"
+	m.GenerateJSONResponse(w, r, 200, message, result)
 }
 
 func main() {
