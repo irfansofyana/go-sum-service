@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	m "sum/middleware"
+	"sum/service"
 	"sum/utils"
 
 	"github.com/gorilla/mux"
@@ -17,16 +18,16 @@ func GetSumHandler(w http.ResponseWriter, r *http.Request) {
 	var a, _ = r.URL.Query()["a"]
 	var b, _ = r.URL.Query()["b"]
 
-	result, err := utils.Sum(a[0], b[0])
+	result, err := service.Sum(a[0], b[0])
 
 	if err != nil {
 		message := "Internal server error"
-		utils.GenerateJSONResponse(w, r, 500, message, nil)
+		utils.GenerateJSONResponse(w, r, http.StatusInternalServerError, message, nil)
 		return
 	}
 
 	message := "Success"
-	utils.GenerateJSONResponse(w, r, 200, message, result)
+	utils.GenerateJSONResponse(w, r, http.StatusOK, message, result)
 }
 
 func main() {

@@ -7,5 +7,5 @@ import (
 
 // FinalMiddleware is the last middleware that will be executed
 func FinalMiddleware(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-	utils.GenerateJSONResponse(w, r, 404, "Resource not found", nil)
+	utils.GenerateJSONResponse(w, r, http.StatusNotFound, "Resource not found", nil)
 }
