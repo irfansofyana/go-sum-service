@@ -10,6 +10,7 @@ import (
 	"sum/utils"
 
 	"github.com/gorilla/mux"
+	"github.com/spf13/viper"
 	"github.com/urfave/negroni"
 )
 
@@ -30,14 +31,15 @@ func GetSumHandler(w http.ResponseWriter, r *http.Request) {
 	utils.GenerateJSONResponse(w, r, http.StatusOK, message, result)
 }
 
-func main() {
-	fmt.Println("Sum service started at localhost:8080")
+func readEnvVariables() {
+	viper.SetConfigFile(".env")
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatalf("Error while reading config file %s", err)
+	}
+}
 
-	router := mux.NewRouter()
-	router.Methods("GET").
-		Path("/sum").
-		HandlerFunc(GetSumHandler)
-
+func middlewareConfig(router *mux.Router) *negroni.Negroni {
 	middlewareHandler := http.NewServeMux()
 	middlewareHandler.Handle("/sum", negroni.New(
 		negroni.HandlerFunc(m.SumMiddleware),
@@ -50,5 +52,20 @@ func main() {
 
 	n := negroni.Classic()
 	n.UseHandler(middlewareHandler)
-	log.Fatal(http.ListenAndServe(":8080", n))
+
+	return n
+}
+
+func main() {
+	readEnvVariables()
+	port := viper.GetString("port")
+
+	fmt.Printf("Sum service started at localhost:%s\n", port)
+
+	router := mux.NewRouter()
+	router.Methods("GET").
+		Path("/sum").
+		HandlerFunc(GetSumHandler)
+
+	log.Fatal(http.ListenAndServe(port, middlewareConfig(router)))
 }
