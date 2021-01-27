@@ -37,7 +37,7 @@ func main() {
 		HandlerFunc(GetSumHandler)
 
 	n := negroni.New()
-	n.Use(negroni.HandlerFunc(m.GetSumHandler))
+	n.Use(negroni.HandlerFunc(m.SumMiddleware))
 	n.UseHandler(router)
 	
 	log.Fatal(http.ListenAndServe(":8080", n))
