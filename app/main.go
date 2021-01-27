@@ -14,8 +14,7 @@ import (
 	"github.com/urfave/negroni"
 )
 
-// GetSumHandler is handler function for /sum endpoint
-func GetSumHandler(w http.ResponseWriter, r *http.Request) {
+func getSumHandler(w http.ResponseWriter, r *http.Request) {
 	var a, _ = r.URL.Query()["a"]
 	var b, _ = r.URL.Query()["b"]
 
@@ -65,7 +64,7 @@ func main() {
 	router := mux.NewRouter()
 	router.Methods("GET").
 		Path("/sum").
-		HandlerFunc(GetSumHandler)
+		HandlerFunc(getSumHandler)
 
 	log.Fatal(http.ListenAndServe(port, middlewareConfig(router)))
 }
