@@ -17,4 +17,6 @@ func GenerateJSONResponse(w http.ResponseWriter, r *http.Request, statusCode int
 		response = fmt.Sprintf("{message:%q, sum:%v}", message, sum)
 	}
 	w.Write([]byte(response))
+
+	return
 }

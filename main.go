@@ -21,7 +21,6 @@ func GetSumHandler(w http.ResponseWriter, r *http.Request) {
 	if (err != nil) {
 		message := "Internal server error"
 		utils.GenerateJSONResponse(w, r, 500, message, nil)
-		return
 	}
 
 	message := "Success"
@@ -39,6 +38,10 @@ func main() {
 	middlewareHandler := http.NewServeMux()
 	middlewareHandler.Handle("/sum", negroni.New(
 		negroni.HandlerFunc(m.SumMiddleware),
+		negroni.Wrap(router),
+	))
+	middlewareHandler.Handle("/", negroni.New(
+		negroni.HandlerFunc(m.FinalMiddleware),
 		negroni.Wrap(router),
 	))
 	
