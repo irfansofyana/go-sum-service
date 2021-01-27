@@ -38,7 +38,12 @@ func readEnvVariables() {
 	}
 }
 
-func middlewareConfig(router *mux.Router) *negroni.Negroni {
+func middlewareConfig() *negroni.Negroni {
+	router := mux.NewRouter()
+	router.Methods("GET").
+		Path("/sum").
+		HandlerFunc(getSumHandler)
+
 	middlewareHandler := http.NewServeMux()
 	middlewareHandler.Handle("/sum", negroni.New(
 		negroni.HandlerFunc(m.SumMiddleware),
@@ -61,10 +66,5 @@ func main() {
 
 	fmt.Printf("Sum service started at localhost:%s\n", port)
 
-	router := mux.NewRouter()
-	router.Methods("GET").
-		Path("/sum").
-		HandlerFunc(getSumHandler)
-
-	log.Fatal(http.ListenAndServe(port, middlewareConfig(router)))
+	log.Fatal(http.ListenAndServe(port, middlewareConfig()))
 }
