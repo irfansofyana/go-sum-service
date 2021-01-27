@@ -10,7 +10,7 @@
 - Without Docker
 
      ```
-    $ go run main.go
+    $ go run app/main.go
     ```
 
 - With Docker

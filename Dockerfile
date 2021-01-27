@@ -12,7 +12,7 @@ RUN go mod download
 
 # Build application
 USER root
-RUN CGO_ENABLED=0 go build -o /app main.go
+RUN CGO_ENABLED=0 go build -o /app app/main.go
 
 # Create deployment image from the built result
 FROM scratch
