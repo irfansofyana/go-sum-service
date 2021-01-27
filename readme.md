@@ -16,7 +16,7 @@
 - With Docker
     - Build docker image
         ```
-        $ docker built -t <desired_tag> .
+        $ docker build -t <desired_tag> .
         ```
     - Run the image
         ```
