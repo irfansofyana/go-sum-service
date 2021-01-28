@@ -7,7 +7,7 @@ WORKDIR /src
 # Copy all files into /src
 COPY . /src
 
-# Install all dependencies
+# Download all dependencies
 RUN go mod download
 
 # Build application

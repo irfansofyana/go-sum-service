@@ -31,7 +31,7 @@ func getSumHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func readEnvVariables() {
-	viper.SetConfigFile(".env")
+	viper.SetConfigFile("env.json")
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatalf("Error while reading config file %s", err)
@@ -61,10 +61,11 @@ func middlewareConfig() *negroni.Negroni {
 }
 
 func main() {
-	readEnvVariables()
-	port := viper.GetString("port")
+	// readEnvVariables()
+	// port := viper.GetString("server.address")
+	port := "9000"
 
 	fmt.Printf("Sum service started at localhost:%s\n", port)
 
-	log.Fatal(http.ListenAndServe(port, middlewareConfig()))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), middlewareConfig()))
 }
