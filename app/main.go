@@ -20,7 +20,7 @@ func getSumHandler(w http.ResponseWriter, r *http.Request) {
 	result, err := service.Sum(a[0], b[0])
 
 	if err != nil {
-		message := "Internal server error"
+		message := fmt.Sprintf("Internal server error: %s", err)
 		utils.GenerateJSONResponse(w, r, http.StatusInternalServerError, message, nil)
 		return
 	}

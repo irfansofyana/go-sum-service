@@ -11,7 +11,7 @@ func Sum(a string, b string) (*big.Int, error) {
 	var bigB, isNumberB = new(big.Int).SetString(b, 10)
 
 	if !isNumberA || !isNumberB {
-		return nil, errors.New("Cannot perform sum operation: non-number value detected")
+		return nil, errors.New("BigInt error")
 	}
 
 	return bigA.Add(bigA, bigB), nil
