@@ -10,7 +10,6 @@ import (
 	"sum/utils"
 
 	"github.com/gorilla/mux"
-	"github.com/spf13/viper"
 	"github.com/urfave/negroni"
 )
 
@@ -28,14 +27,6 @@ func getSumHandler(w http.ResponseWriter, r *http.Request) {
 
 	message := "Success"
 	utils.GenerateJSONResponse(w, r, http.StatusOK, message, result)
-}
-
-func readEnvVariables() {
-	viper.SetConfigFile("env.json")
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalf("Error while reading config file %s", err)
-	}
 }
 
 func middlewareConfig() *negroni.Negroni {
@@ -61,9 +52,7 @@ func middlewareConfig() *negroni.Negroni {
 }
 
 func main() {
-	// readEnvVariables()
-	// port := viper.GetString("server.address")
-	port := "9000"
+	port := "8080"
 
 	fmt.Printf("Sum service started at localhost:%s\n", port)
 
